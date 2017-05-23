@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "get_opt.h"
 #include "util.h"
 #include "lexer.h"
 #include "parser.h"

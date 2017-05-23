@@ -2,6 +2,8 @@
 # define VM_H_
 
 # include <stdlib.h>
+# include <stdint.h>
+
 # include "new.h"
 
 # include "compiler.h"

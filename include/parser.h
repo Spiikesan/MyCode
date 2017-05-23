@@ -1,6 +1,8 @@
 #ifndef PARSER_H_
 # define PARSER_H_
 
+# include <stdint.h>
+
 # include "new.h"
 # include "vector.h"
 

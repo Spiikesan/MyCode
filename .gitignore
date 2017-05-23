@@ -31,3 +31,8 @@
 # Debug files
 *.dSYM/
 *.su
+
+C-modulaire/
+bin/
+obj/
+MyCode
