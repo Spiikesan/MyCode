@@ -6,6 +6,8 @@ SRC		= main.c \
 		  vector_accessors.c \
 		  map_modifiers.c \
 		  map_accessors.c \
+		  get_opt.h \
+		  opt_types.h \
 		  pair.c \
 		  lexer.c \
 		  parser.c \

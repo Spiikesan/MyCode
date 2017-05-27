@@ -1,6 +1,8 @@
 #ifndef PARSER_H_
 # define PARSER_H_
 
+# include <stdint.h>
+
 # include "new.h"
 # include "vector.h"
 
@@ -41,6 +43,11 @@ typedef struct	parser
 
 parser	*parser_new(parser_init var);
 node	*node_new(node_init var);
+int 	sym_is(parser *p, char *sym);
+int     node_is(node *n, char *kind);
+void    next_sym(parser *p);
+void  node_rename(node *n, char *name);
+
 
 void	node_add_child(node *n, node *c);
 

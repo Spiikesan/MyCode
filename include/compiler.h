@@ -1,6 +1,8 @@
 #ifndef COMPILER_H_
 # define COMPILER_H_
 
+# include <stdint.h>
+
 # include "new.h"
 # include "map.h"
 
