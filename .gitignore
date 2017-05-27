@@ -1,4 +1,6 @@
 # Object files
+obj/*
+bin/*
 *.o
 *.ko
 *.obj
