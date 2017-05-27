@@ -64,3 +64,4 @@ int	vector_set(t_vector *v, size_t index, void *elem)
   v->array[index] = elem;
   return (VEC_NOERR);
 }
+

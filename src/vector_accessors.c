@@ -20,3 +20,4 @@ void	*vector_at(t_vector *v, size_t index)
     return (NULL);
   return (v->array[index]);
 }
+

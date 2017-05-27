@@ -16,3 +16,4 @@ void		*map_get(const t_map *m, const void *key)
     }
   return (m->defVal);
 }
+

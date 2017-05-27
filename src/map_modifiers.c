@@ -97,3 +97,4 @@ int		map_remove(t_map *m, const void *key)
       return (MAP_FUNC);
   return (MAP_NOERR);
 }
+

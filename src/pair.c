@@ -10,3 +10,4 @@ t_pair		*t_pair_new(t_pair_init var)
   p->second = var.second;
   return (p);
 }
+

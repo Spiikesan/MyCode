@@ -82,3 +82,4 @@ void	_unreg_object(t_object *obj)
       new_front = obj->next;
   }
 }
+

@@ -1,7 +1,7 @@
 NAME		= MyCode
 
 SRC		= main.c \
-		  new.c \
+		  new.c		\
 		  vector_modifiers.c \
 		  vector_accessors.c \
 		  map_modifiers.c \
