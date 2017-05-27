@@ -27,6 +27,7 @@ typedef struct
   t_vector	*validors;
   FILE		*stream;
   void		*symbol_value;
+  size_t    symbol_value_size;
   char		*symbol;
   char		act;
 }		lexer;

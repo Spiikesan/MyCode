@@ -42,6 +42,34 @@ node	*node_new(node_init var)
   return (n);
 }
 
+void  node_rename(node *n, char *name)
+{
+  if (n && name)
+  {
+    free(n->kind);
+    n->kind = strdup(name);
+  }
+}
+
+void    next_sym(parser *p)
+{
+  lexer_next(p->lexer);
+}
+
+int   node_is(node *n, char *kind)
+{
+  if (n && kind)
+    return (strcmp(n->kind, kind) == 0);
+  return (-1);
+}
+
+int   sym_is(parser *p, char *sym)
+{
+  if (p && p->lexer->symbol && sym)
+    return (strcmp(p->lexer->symbol, sym) == 0);
+  return (-1);
+}
+
 void	node_add_child(node *n, node *c)
 {
   if (n && c)

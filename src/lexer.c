@@ -5,6 +5,7 @@ static void	lexer_clear_sym(lexer *l)
   free(l->symbol_value);
   free(l->symbol);
   l->symbol_value = NULL;
+  l->symbol_value_size = 0;
   l->symbol = NULL;
 }
 
@@ -45,6 +46,7 @@ char	*lexer_sym(lexer *l, size_t sym_size, void *sym_value, const char *symname)
     {
       assert(l->symbol_value = malloc(sym_size));
       memcpy(l->symbol_value, sym_value, sym_size);
+      l->symbol_value_size = sym_size;
     }
   return (l->symbol);
 }
