@@ -5,7 +5,7 @@ With MyCode, you can create your own language, or just add anything you want to 
 
 This project will use my C-modular library available here: https://github.com/Spiikesan/C-modulaire
 
-The programm can run a (very) small language with C syntax, based on the work of Marc Feeley (Tyni-C).
+The programm can run a (very) small language with C like syntax, based on the work of Marc Feeley (Tyni-C).
 
 Here is the BNF
 
@@ -19,14 +19,15 @@ Here is the BNF
                 <expr> ";" |
                 ";"
 <paren_expr> ::= "(" <expr> ")"
-<comma_expr> ::= <expr> [, <expr>]
+<comma_expr> ::= <expr> [, <expr>]+
 <expr> ::= <test> | <id> "=" <expr>
 <test> ::= <sum> | <sum> "<" <sum>
 <sum> ::= <term> | <sum> "+" <term> | <sum> "-" <term>
 <term> ::= <id> | <int> | <paren_expr> | <id> "(" <comma_expr> ? ")"
-<id> ::= "a" | "b" | "c" | "d" | ... | "z"
+<id> ::= ["a" | "b" | "c" | "d" | ... | "z"]+
 <int> ::= <an_unsigned_decimal_integer>
 ```
+There is only 2 syscalls, char read() and write(char)
 
 This line can be run and the word typed will be crypted with Cesar algorithm.
 
