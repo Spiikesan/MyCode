@@ -24,6 +24,7 @@ lexer	*lexer_new(lexer_init var)
       (l->validors = new(t_vector)) == NULL)
     return (NULL);
   l->stream = var.stream;
+  l->act = ' ';
   return (l);
 }
 
@@ -97,6 +98,21 @@ char	*valid_num(lexer *l) /* missing overflow check (assert int_val > 0 ?) */
 
 char	*valid_id(lexer *l)
 {
+  const char const *syscalls[] = {
+    "read",
+    "write",
+    NULL
+  };
+  const struct {
+    char *key;
+    char *sym;
+  } keywords[] = {
+    {"do", "DO_SYM"},
+    {"else", "ELSE_SYM"},
+    {"if", "IF_SYM"},
+    {"while", "WHILE_SYM"},
+    {NULL, NULL}
+  };
   const char	*symname = "ID";
   char		ch = lexer_peek(l);
   char		id_name[MAX_ID_SIZE];
@@ -111,9 +127,19 @@ char	*valid_id(lexer *l)
 	  ch = lexer_next(l);
 	}
       if ((ch >= 'a' && ch <= 'z') || ch == '_')
-	return (NULL); /* Need implementation of error syntax gestion */
-      id_name[i] = '\0';
-      return (lexer_sym(l, strlen(id_name), id_name, symname));
+	return (NULL); /* Need implementation of built-in error syntax gestion */
+      id_name[i] = 0;
+      for (i = 0; syscalls[i] != NULL; ++i) {
+	if (strcmp(id_name, syscalls[i]) == 0) {
+	  return (lexer_sym(l, strlen(id_name) + 1, id_name, "SYSCALL"));
+	}
+      }
+      for (i = 0; keywords[i].key != NULL; ++i) {
+	if (strcmp(id_name, keywords[i].key) == 0) {
+	  return (lexer_sym(l, 0, NULL, keywords[i].sym));
+	}
+      }
+      return (lexer_sym(l, strlen(id_name) + 1, id_name, symname));
     }
   return (NULL);
 }
@@ -134,56 +160,3 @@ char		*get_next_symbol(lexer *l)
       return (sym);
   return (NULL);
 }
-
-/* void next_sym() */
-/* { */
-/*     again: switch (ch) */
-/*     { */
-/*         case ' ': case '\n': next_ch(); goto again; */
-/*         case EOF: sym = EOI; printf("\nEnd of input\n"); break; */
-/*         case '#': sym = EOI; getchar(); printf("End of input\n"); break; */
-/*         case '{': next_ch(); sym = LBRA; break; */
-/*         case '}': next_ch(); sym = RBRA; break; */
-/*         case '(': next_ch(); sym = LPAR; break; */
-/*         case ')': next_ch(); sym = RPAR; break; */
-/*         case '+': next_ch(); sym = PLUS; break; */
-/*         case '-': next_ch(); sym = MINUS; break; */
-/*         case '<': next_ch(); sym = LESS; break; */
-/*         case '>': next_ch(); sym = MORE; break; */
-/*         case ';': next_ch(); sym = SEMI; break; */
-/*         case '=': next_ch(); sym = EQUAL; break; */
-/*         case ',': next_ch(); sym = COMMA; break; */
-/*         default: */
-/*         if (ch >= '0' && ch <= '9') */
-/*         { */
-/* 	  int_val = 0; /\* missing overflow check *\/ */
-/* 	  while (ch >= '0' && ch <= '9') */
-/*             { */
-/*                 int_val = int_val*10 + (ch - '0'); next_ch(); */
-/*             } */
-/*             sym = INT; */
-/*         } */
-/*         else if (ch >= 'a' && ch <= 'z') */
-/*         { */
-/*             int i = 0; */
-/*             while (((ch >= 'a' && ch <= 'z') || ch == '_') && i < sizeof(id_name)) */
-/*             { */
-/*                 id_name[i++] = ch; */
-/*                 next_ch(); */
-/*             } */
-/*             if ((ch >= 'a' && ch <= 'z') || ch == '_') /\* more than sizeof(id_name) characters ? *\/ */
-/*                 syntax_error("Too much characters in identifier (max is 126)"); */
-/*             id_name[i] = '\0'; */
-/*             sym = 0; */
-/*             while (words[sym] != NULL && strcmp(words[sym], id_name) != 0) */
-/*                 sym++; */
-/*             if (words[sym] == NULL) */
-/*             { */
-/*                 //printf("Requesting ID symbol '%s'\n", id_name); */
-/*                 sym = ID;  /\* Adding named IDs (and not only a...z ids that are actually registers) that can contains up to 128 chars a...b and _*\/ */
-/*             } */
-/*         } */
-/*         else */
-/*             syntax_error("Unknown character"); */
-/*     } */
-/* } */

@@ -34,6 +34,7 @@ typedef struct	vm
   bytecode	*program;
   size_t	program_size;
   bytecode	*pc;
+  int32_t	registers[32];
 }		vm;
 
 typedef int (*vm_opcode_func)(vm *v);

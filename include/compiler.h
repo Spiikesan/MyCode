@@ -8,7 +8,7 @@
 
 # include "parser.h"
 
-typedef char bytecode;
+typedef unsigned char bytecode;
 
 # define CODE_REALLOC_SIZE	(1024)
 
@@ -37,6 +37,7 @@ typedef struct	compiler
 {
   t_object	__obj__;
   size_t	code_size;
+  size_t	actual_code_size;
   bytecode	*code;
   bytecode	*current;
   bytecode	*end;
@@ -48,9 +49,9 @@ typedef int (*opcode_func)(compiler *c, node *n);
 compiler	*compiler_new(compiler_init var);
 
 /*
-** Used to push the bytecode "c" into the code.
+** Used to push the data into the code.
 */
-bytecode	*bc_push(compiler *c, bytecode bc);
+bytecode	*bc_push(compiler *c, void *data, size_t size);
 
 /*
 ** Used to skip bytecode size "size"

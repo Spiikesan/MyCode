@@ -5,6 +5,7 @@
 
 # include "new.h"
 # include "vector.h"
+# include "map.h"
 
 # include "lexer.h"
 
@@ -22,7 +23,7 @@ typedef struct	node
   void		*value;
   size_t	value_size;
   t_vector	*children;
-  t_vector	*symbols;
+  t_map		*symbols;
 }		node;
 
 typedef struct	parser_init
@@ -47,7 +48,6 @@ int 	sym_is(parser *p, char *sym);
 int     node_is(node *n, char *kind);
 void    next_sym(parser *p);
 void  node_rename(node *n, char *name);
-
 
 void	node_add_child(node *n, node *c);
 

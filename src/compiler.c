@@ -15,17 +15,19 @@ static int	string_test(const void *a, const void *b)
 
 static	int	PROG_op(compiler *c, node *n)
 {
-  printf("Beginning program compilation\n");
+  bytecode	bc = OP_HALT;
+  printf("Beginning program compilation...");
   if (n->children->size > 0)
     if (bc_compile(c, VGETP(node *, n->children, 0)) == -1)
       return (-1);
-  bc_push(c, OP_HALT);
+  bc_push(c, &bc, sizeof(bytecode));
+  c->actual_code_size = c->current - c->code;
+  printf("Done.\n");
   return (0);
 }
 
 static	int	EMPTY_op(UNUSED compiler *c, UNUSED node *n)
 {
-  printf("Empty op creation\n");
   return (0);
 }
 
@@ -42,7 +44,7 @@ compiler	*compiler_new(compiler_init var)
   if (var.code_size == 0)
     var.code_size = CODE_REALLOC_SIZE;
   c->code_size = var.code_size;
-  if ((c->code = malloc(c->code_size)) == NULL)
+  if ((c->code = calloc(c->code_size, sizeof(*c->code))) == NULL)
     return (NULL);
   c->current = c->code;
   c->end = c->code + c->code_size;
@@ -63,9 +65,10 @@ int	bc_compile(compiler *c, node *n)
   return (-1);
 }
 
-bytecode	*bc_push(compiler *c, bytecode bc)
+bytecode	*bc_push(compiler *c, void *data, size_t size)
 {
-  *c->current++ = bc;
+  memcpy(c->current, data, size);
+  c->current += size;
   return (c->current);
 }
 

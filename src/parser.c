@@ -20,7 +20,16 @@ void	node_del(void *p)
       n = p;
       free(n->kind);
       free(n->value);
+      FOREACH(t_pair *, p, n->symbols)
+	free(p->first);
     }
+}
+
+static int	string_test(const void *a, const void *b)
+{
+  if (!a || !b)
+    return (-1);
+  return (strcmp((char *)a,(char *)b));
 }
 
 node	*node_new(node_init var)
@@ -30,7 +39,7 @@ node	*node_new(node_init var)
   if (var.kind == NULL ||
       (n = newObject(node, node_del)) == NULL ||
       (n->children = new(t_vector)) == NULL ||
-      (n->symbols = new(t_vector)) == NULL ||
+      (n->symbols = new(t_map, string_test, .defVal=(void *)-1)) == NULL ||
       (n->kind = strdup(var.kind)) == NULL)
     return (NULL);
   if (var.value != NULL && var.value_size != 0)
@@ -38,6 +47,7 @@ node	*node_new(node_init var)
       if ((n->value = malloc(var.value_size)) == NULL)
 	return (NULL);;
       memcpy(n->value, var.value, var.value_size);
+      n->value_size = var.value_size;
     }
   return (n);
 }
@@ -53,7 +63,7 @@ void  node_rename(node *n, char *name)
 
 void    next_sym(parser *p)
 {
-  lexer_next(p->lexer);
+  get_next_symbol(p->lexer);
 }
 
 int   node_is(node *n, char *kind)

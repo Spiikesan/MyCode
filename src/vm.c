@@ -47,7 +47,7 @@ vm	*vm_new(vm_init var)
   v->stack_size = (var.stack_size ? var.stack_size : DEFAULT_STACK_SIZE);
   v->program_size = var.program_size;
   if ((v->stack = calloc(v->stack_size, sizeof(*v->stack))) == NULL ||
-      (v->program = calloc(v->program_size, sizeof(bytecode))) == NULL)
+      (v->program = calloc(v->program_size, sizeof(*v->program))) == NULL)
     return (NULL);
   memcpy(v->program, var.program, v->program_size);
   v->sp = v->stack;
@@ -61,7 +61,7 @@ int	run(vm *v)
   int		ret;
 
   while ((func = MGET(vm_opcode_func, v->opcodes, v->pc++)) != NULL &&
-	 (size_t)(v->pc - v->program) < v->program_size)
+	 (size_t)(v->pc - v->program) <= v->program_size)
     {
       ret = func(v);
       if (ret == -1)
@@ -69,7 +69,7 @@ int	run(vm *v)
       else if (ret == HALT)
 	return (0);
     }
-  return (0);
+  return (-1);
 }
 
 int	vm_register_opcode(vm *v, bytecode b, vm_opcode_func func)
