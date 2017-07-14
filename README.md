@@ -1,5 +1,5 @@
 # MyCode
-This repository will contain a Lexer/Parser/Compiler/Virtual Machine that will be very modular, written in C (Linux, maybe Windows later).
+This repository will contain a Lexer/Parser/Compiler/Virtual Machine that will be very modular, written in C (Linux / Windows).
 
 With MyCode, you can create your own language, or just add anything you want to an existing.
 
@@ -29,7 +29,7 @@ Here is the BNF
 ```
 There is only 2 syscalls, char read() and write(char)
 
-This line can be run and the word typed will be crypted with Cesar algorithm.
+This line can be run and the word typed will be crypted with Caesar algorithm.
 
     { dec=2; char=97; while (char>96) {char=read(); if (char>96) { char = char + dec; if (char > 122) char = char - 26; if (char < 97) char = char + 26; } write(char);} }
 
