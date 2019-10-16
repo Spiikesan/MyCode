@@ -5,7 +5,7 @@ With MyCode, you can create your own language, or just add anything you want to 
 
 This project will use my C-modular library available here: https://github.com/Spiikesan/C-modulaire
 
-The programm can run a (very) small language with C like syntax, based on the work of Marc Feeley (Tyni-C).
+The programm can run a (very) small language with C like syntax, based on the work of Marc Feeley (Tiny-C).
 
 Here is the BNF
 
